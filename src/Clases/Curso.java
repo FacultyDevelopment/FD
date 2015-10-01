@@ -8,7 +8,10 @@ public class Curso {
     private String ProgramName;
     private String lenguaje;
     private String campus;
-
+    private int OFS; //Entre -100 y 100
+    private int IPR; //Entre 1 y 5
+    private int NPS; //Entre -100 y 100
+    
     public Curso() {
     }
 
