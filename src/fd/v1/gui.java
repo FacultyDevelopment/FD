@@ -1,6 +1,7 @@
 package fd.v1;
 
 import Clases.*;
+import com.sun.awt.AWTUtilities;
 import java.util.ArrayList;
 
 /**
@@ -8,32 +9,64 @@ import java.util.ArrayList;
  * @author wcarrasco
  */
 public class gui extends javax.swing.JFrame {
+    /*Objetos para Thread Cargar!*/
+    double iThread=50, jThread = 1;
+    Cargar hilo;
+    /*Objetos para Thread Cargar!*/
 
     
     public gui() {
         initComponents();
+        iniciar();
     }
-
+    
+    public void iniciar(){
+        setLocationRelativeTo(null);
+        getProgreso().setVisible(false);
+        hilo = new Cargar(getProgreso());
+        hilo.start();
+        hilo = null;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        Progreso = new javax.swing.JProgressBar();
+        jLabel1 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Progreso.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ProgresoStateChanged(evt);
+            }
+        });
+        getContentPane().add(Progreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 430, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fd/v1/Faculty Development Logo-04.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 810, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ProgresoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ProgresoStateChanged
+        if (Progreso.getValue() == iThread) {
+            if (jThread != 101) {
+                AWTUtilities.setWindowOpacity(this, Float.valueOf((100-jThread)/100+"f"));
+                iThread++;
+                jThread+=2;
+            }
+        }
+        
+        if (Progreso.getValue() == 99) {
+            gui2 g = new gui2();
+            g.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_ProgresoStateChanged
 
     
     public static void main(String args[]) {
@@ -69,8 +102,22 @@ public class gui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar Progreso;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-    ArrayList <Docente> listaDocentes = new ArrayList<>();
-    ArrayList <Curso> listaCursos = new ArrayList<>();
-    private String usuarioLogIn, passwordLogIn;
+    
+
+    /**
+     * @return the Progreso
+     */
+    public javax.swing.JProgressBar getProgreso() {
+        return Progreso;
+    }
+
+    /**
+     * @param Progreso the Progreso to set
+     */
+    public void setProgreso(javax.swing.JProgressBar Progreso) {
+        this.Progreso = Progreso;
+    }
 }
