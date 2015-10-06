@@ -2,6 +2,11 @@ package fd.v1;
 
 import java.util.ArrayList;
 import Clases.*;
+import java.io.BufferedReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  *
@@ -11,6 +16,25 @@ public class gui2 extends javax.swing.JFrame {
 
     public gui2() {
         initComponents();
+        try{
+            System.out.println("Entra al try");
+            socketCliente = new Socket("localhost", 9689);
+            System.out.println("se conecta");
+            output = new ObjectOutputStream(socketCliente.getOutputStream());
+            output.flush();
+            input = new ObjectInputStream(socketCliente.getInputStream());
+            
+            
+            output.writeUTF("hola");
+            System.out.println("mandado hola");
+            output.flush();
+            
+            System.out.println("conectado");
+            //taTexto.setText("Conectado");
+            taTexto.setText(taTexto.getText()+"\n"+input.readUTF());
+        }catch(Exception e){
+            
+        }
     }
 
     
@@ -18,17 +42,30 @@ public class gui2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taTexto = new javax.swing.JTextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        taTexto.setColumns(20);
+        taTexto.setRows(5);
+        jScrollPane1.setViewportView(taTexto);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
@@ -68,10 +105,17 @@ public class gui2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea taTexto;
     // End of variables declaration//GEN-END:variables
     ArrayList <Docente> listaDocentes = new ArrayList<>();
     ArrayList <Curso> listaCursos = new ArrayList<>();
     private String usuarioLogIn, passwordLogIn;
-
+    static Socket socketCliente = null;
+    static PrintWriter salida = null;
+    static BufferedReader entrada = null;
+    static String respuestaServer, preguntaCliente;
+    static ObjectInputStream input;
+    static ObjectOutputStream output;
 
 }
