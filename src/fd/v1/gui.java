@@ -63,6 +63,8 @@ public class gui extends javax.swing.JFrame {
         
         if (Progreso.getValue() == 99) {
             gui2 g = new gui2();
+            g.setTitle("                                                                                 ---FACULTY DEVELOPMENT---");
+            g.setLocationRelativeTo(null);
             g.setVisible(true);
             this.dispose();
         }
