@@ -35,7 +35,7 @@ public class gui2 extends javax.swing.JFrame {
             
             System.out.println("conectado");
             //taTexto.setText("Conectado");
-            System.out.println(input.readUTF());
+            //System.out.println(input.readUTF() );
             //taTexto.setText(taTexto.getText()+"\n"+input.readUTF());
             
             
